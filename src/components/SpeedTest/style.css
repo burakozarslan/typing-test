@@ -1,0 +1,23 @@
+.words--container {
+  border: 1px solid teal;
+  max-width: 80%;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  line-height: 1.75em;
+  height: 6em;
+  overflow: hidden;
+}
+
+.word {
+  font-size: 1.75rem;
+  margin: 5px 10px;
+}
+
+.word.active {
+  color: orange;
+}
+
+.active.typo {
+  color: red;
+}

@@ -1,9 +1,11 @@
 import React from "react";
 
+import SpeedTest from "./components/SpeedTest";
+
 const App = () => {
   return (
     <div>
-      <h1>Test Title</h1>
+      <SpeedTest />
     </div>
   );
 };
