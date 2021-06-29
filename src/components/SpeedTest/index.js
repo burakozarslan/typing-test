@@ -33,6 +33,7 @@ const SpeedTest = () => {
       .catch((err) => console.log(err.message));
   }, []);
 
+  // executed after words are fetched
   useEffect(() => {
     if (words.length !== 0) {
       // splits words into rows consist of 8 words, then updates rows state
@@ -40,6 +41,7 @@ const SpeedTest = () => {
     }
   }, [words]);
 
+  // keeps track of current row
   useEffect(() => {
     setCurrentRowIndex(Math.floor(currentWordIndex / 8));
   }, [currentWordIndex]);
