@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-
 import "./style.css";
+
 import { fetchAllWords } from "../../services/network/fetchWords";
 import { organizeRows } from "../../services/utils/organizeRows";
 
@@ -21,12 +21,35 @@ const SpeedTest = () => {
   const [numOfCorrectWords, setNumOfCorrectWords] = useState(0);
   // number of incorrect words
   const [numOfIncorrectWords, setNumOfIncorrectWords] = useState(0);
+  // countdown value in seconds
+  const [secondsLeft, setSecondsLeft] = useState(5);
+  // is user started typing
+  const [isPlaying, setIsPlaying] = useState(true);
 
   useEffect(() => {
     fetchAllWords(40)
       .then(({ data }) => setWords(data))
       .catch((err) => console.log(err.message));
   }, []);
+
+  useEffect(() => {
+    if (isPlaying) {
+      const startDate = new Date();
+      var interval = setInterval(() => {
+        const now = new Date();
+        // time difference in seconds
+        let difference = Math.floor((+now - +startDate) / 1000);
+        let secsLeft = 5 - difference;
+
+        setSecondsLeft(secsLeft);
+
+        if (secsLeft === 0) clearInterval(interval);
+      }, 1000);
+    }
+
+    // stop interval when component unmounted
+    return () => clearInterval(interval);
+  }, [isPlaying]);
 
   // updates isTypo state when inputValue changes
   useEffect(() => {
@@ -36,6 +59,14 @@ const SpeedTest = () => {
       else setIsTypo(true);
     }
   }, [inputValue, currentWordIndex, words]);
+
+  // set isPlaying false when no time left
+  useEffect(() => {
+    if (secondsLeft === 0) {
+      console.log("time is over");
+      setIsPlaying(false);
+    }
+  }, [secondsLeft]);
 
   // executed after words are fetched
   useEffect(() => {
@@ -71,6 +102,7 @@ const SpeedTest = () => {
 
   return (
     <div className="speed-test--container">
+      {secondsLeft}
       <div className="words--container">
         {rows.length !== 0 &&
           rows[currentRowIndex].map((word, index) => {
