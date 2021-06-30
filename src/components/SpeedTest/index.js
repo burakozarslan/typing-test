@@ -68,7 +68,7 @@ const SpeedTest = () => {
       );
       setIsPlaying(false);
     }
-  }, []);
+  }, [secondsLeft]);
 
   // executed after words are fetched
   useEffect(() => {
