@@ -4,6 +4,8 @@ import "./style.css";
 import { fetchAllWords } from "../../services/network/fetchWords";
 import { organizeRows } from "../../services/utils/organizeRows";
 
+import ResultCard from "../ResultCard";
+
 const SpeedTest = () => {
   // all words fetched through api
   const [words, setWords] = useState([]);
@@ -128,7 +130,12 @@ const SpeedTest = () => {
         value={inputValue}
         placeholder="Start Typing"
       />
-      {JSON.stringify(rows)}
+      {!isPlaying && (
+        <ResultCard
+          correct={numOfCorrectWords}
+          incorrect={numOfIncorrectWords}
+        />
+      )}
     </div>
   );
 };
