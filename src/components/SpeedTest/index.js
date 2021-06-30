@@ -70,7 +70,7 @@ const SpeedTest = () => {
       );
       setIsPlaying(false);
       // reset words after time is up
-      setWords([]);
+      // setWords([]);
       setRows([]);
     }
   }, [secondsLeft]);
