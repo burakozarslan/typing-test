@@ -69,6 +69,9 @@ const SpeedTest = () => {
         `Correct: ${numOfCorrectWords} & Incorrect: ${numOfIncorrectWords}`
       );
       setIsPlaying(false);
+      // reset words after time is up
+      setWords([]);
+      setRows([]);
     }
   }, [secondsLeft]);
 
@@ -89,10 +92,13 @@ const SpeedTest = () => {
     setCurrentWordIndex(currentWordIndex + 1);
     setInputValue("");
 
-    // increment correct words number by 1
-    if (!isTypo) setNumOfCorrectWords(numOfCorrectWords + 1);
-    // increment incorrect words number by 1
-    else setNumOfIncorrectWords(numOfIncorrectWords + 1);
+    // don't update statistics if timer is not counting
+    if (isPlaying) {
+      // increment correct words number by 1
+      if (!isTypo) setNumOfCorrectWords(numOfCorrectWords + 1);
+      // increment incorrect words number by 1
+      else setNumOfIncorrectWords(numOfIncorrectWords + 1);
+    }
 
     // reset isTypo state
     setIsTypo(false);
