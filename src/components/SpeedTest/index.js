@@ -63,7 +63,9 @@ const SpeedTest = () => {
   // set isPlaying false when no time left
   useEffect(() => {
     if (secondsLeft === 0) {
-      console.log("time is over");
+      console.log(
+        `Correct: ${numOfCorrectWords} & Incorrect: ${numOfIncorrectWords}`
+      );
       setIsPlaying(false);
     }
   }, [secondsLeft]);
@@ -86,7 +88,7 @@ const SpeedTest = () => {
     setInputValue("");
 
     // increment correct words number by 1
-    if (isTypo) setNumOfCorrectWords(numOfCorrectWords + 1);
+    if (!isTypo) setNumOfCorrectWords(numOfCorrectWords + 1);
     // increment incorrect words number by 1
     else setNumOfIncorrectWords(numOfIncorrectWords + 1);
 
