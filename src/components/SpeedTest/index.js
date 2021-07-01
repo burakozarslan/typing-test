@@ -86,6 +86,8 @@ const SpeedTest = () => {
       setRows([]);
       // calculate wpm
       calculateWpm();
+      // show results
+      setShowResults(true);
     }
   }, [secondsLeft]);
 
@@ -126,6 +128,13 @@ const SpeedTest = () => {
     // if Spacebar pressed
     if (event.nativeEvent.data === " ") handleToNextWord();
     else setInputValue(event.target.value);
+
+    // set isPlaying state true, so the timer starts
+    // if rows are empty which means game just ended. don't restart the game unless 'replay' button is pressed.
+    if (!isPlaying && rows.length !== 0) {
+      setIsPlaying(true);
+      setShowResults(false);
+    }
   };
 
   return (
