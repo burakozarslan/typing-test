@@ -26,7 +26,9 @@ const SpeedTest = () => {
   // countdown value in seconds
   const [secondsLeft, setSecondsLeft] = useState(10);
   // is user started typing
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
+  // sets true when time's up
+  const [showResults, setShowResults] = useState(false);
 
   // words per minute
   const [wpm, setWpm] = useState(null);
@@ -103,12 +105,12 @@ const SpeedTest = () => {
   const handleToNextWord = () => {
     // don't update statistics if timer is not counting
     if (isPlaying) {
-      // increment correct words number by 1
       let currentWord = words[currentWordIndex];
       if (!isTypo) {
+        // add the current word to 'correct words' list state
         setCorrectWords([...correctWords, currentWord]);
       }
-      // increment incorrect words number by 1
+      // add the current word to 'incorrect words' list state
       else setIncorrectWords([...incorrectWords, currentWord]);
     }
 
@@ -152,7 +154,7 @@ const SpeedTest = () => {
         value={inputValue}
         placeholder="Start Typing"
       />
-      {!isPlaying && (
+      {showResults && (
         <ResultCard
           wpm={wpm}
           correct={correctWords.length}
