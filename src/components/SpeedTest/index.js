@@ -19,14 +19,28 @@ const SpeedTest = () => {
   const [inputValue, setInputValue] = useState("");
   // holds state of current word's accuracy
   const [isTypo, setIsTypo] = useState(false);
-  // number of correct words
-  const [numOfCorrectWords, setNumOfCorrectWords] = useState(0);
-  // number of incorrect words
-  const [numOfIncorrectWords, setNumOfIncorrectWords] = useState(0);
+  // correctly spelled words
+  const [correctWords, setCorrectWords] = useState([]);
+  // incorrectly spelled words
+  const [incorrectWords, setIncorrectWords] = useState([]);
   // countdown value in seconds
-  const [secondsLeft, setSecondsLeft] = useState(5);
+  const [secondsLeft, setSecondsLeft] = useState(10);
   // is user started typing
   const [isPlaying, setIsPlaying] = useState(true);
+
+  // words per minute
+  const [wpm, setWpm] = useState(null);
+
+  const calculateWpm = () => {
+    let totalChars = 0;
+
+    correctWords.forEach((word) => {
+      totalChars = totalChars + word.length;
+    });
+
+    let res = Math.ceil(totalChars / 5 / 0.1);
+    setWpm(res);
+  };
 
   useEffect(() => {
     fetchAllWords(40)
@@ -41,7 +55,7 @@ const SpeedTest = () => {
         const now = new Date();
         // time difference in seconds
         let difference = Math.floor((+now - +startDate) / 1000);
-        let secsLeft = 5 - difference;
+        let secsLeft = 10 - difference;
 
         setSecondsLeft(secsLeft);
 
@@ -65,13 +79,11 @@ const SpeedTest = () => {
   // set isPlaying false when no time left
   useEffect(() => {
     if (secondsLeft === 0) {
-      console.log(
-        `Correct: ${numOfCorrectWords} & Incorrect: ${numOfIncorrectWords}`
-      );
       setIsPlaying(false);
       // reset words after time is up
-      // setWords([]);
       setRows([]);
+      // calculate wpm
+      calculateWpm();
     }
   }, [secondsLeft]);
 
@@ -89,17 +101,21 @@ const SpeedTest = () => {
   }, [currentWordIndex]);
 
   const handleToNextWord = () => {
-    setCurrentWordIndex(currentWordIndex + 1);
-    setInputValue("");
-
     // don't update statistics if timer is not counting
     if (isPlaying) {
       // increment correct words number by 1
-      if (!isTypo) setNumOfCorrectWords(numOfCorrectWords + 1);
+      let currentWord = words[currentWordIndex];
+      if (!isTypo) {
+        setCorrectWords([...correctWords, currentWord]);
+      }
       // increment incorrect words number by 1
-      else setNumOfIncorrectWords(numOfIncorrectWords + 1);
+      else setIncorrectWords([...incorrectWords, currentWord]);
     }
 
+    // skip to next word
+    setCurrentWordIndex(currentWordIndex + 1);
+    // reset input
+    setInputValue("");
     // reset isTypo state
     setIsTypo(false);
   };
@@ -138,8 +154,9 @@ const SpeedTest = () => {
       />
       {!isPlaying && (
         <ResultCard
-          correct={numOfCorrectWords}
-          incorrect={numOfIncorrectWords}
+          wpm={wpm}
+          correct={correctWords.length}
+          incorrect={incorrectWords.length}
         />
       )}
     </div>

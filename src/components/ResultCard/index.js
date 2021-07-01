@@ -6,7 +6,7 @@ const ResultCard = (props) => {
     <div className="result-card__container">
       <div className="result-card__banner">
         <div className="result-card__wpm">
-          <h1>87 WPM</h1>
+          <h1>{props.wpm} WPM</h1>
           <p>(words per minute)</p>
         </div>
         <div className="result-card__statistics">
