@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./style.css";
 
 import { fetchAllWords } from "../../services/network/fetchWords";
@@ -33,7 +33,7 @@ const SpeedTest = () => {
   // words per minute
   const [wpm, setWpm] = useState(null);
 
-  const calculateWpm = () => {
+  const calculateWpm = useCallback(() => {
     let totalChars = 0;
 
     correctWords.forEach((word) => {
@@ -42,7 +42,7 @@ const SpeedTest = () => {
 
     let res = Math.ceil(totalChars / 5 / 0.1);
     setWpm(res);
-  };
+  }, [correctWords]);
 
   useEffect(() => {
     fetchAllWords(40)
@@ -89,7 +89,7 @@ const SpeedTest = () => {
       // show results
       setShowResults(true);
     }
-  }, [secondsLeft]);
+  }, [secondsLeft, calculateWpm]);
 
   // executed after words are fetched
   useEffect(() => {
