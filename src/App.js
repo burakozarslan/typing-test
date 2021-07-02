@@ -1,10 +1,11 @@
 import React from "react";
+import "./App.css";
 
 import SpeedTest from "./components/SpeedTest";
 
 const App = () => {
   return (
-    <div>
+    <div className="App">
       <SpeedTest />
     </div>
   );

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import "./style.css";
+import { VscDebugRestart } from "react-icons/vsc";
 
 import { fetchAllWords } from "../../services/network/fetchWords";
 import { organizeRows } from "../../services/utils/organizeRows";
@@ -139,7 +140,6 @@ const SpeedTest = () => {
 
   return (
     <div className="speed-test--container">
-      {secondsLeft}
       <div className="words--container">
         {rows.length !== 0 &&
           rows[currentRowIndex].map((word, index) => {
@@ -157,12 +157,19 @@ const SpeedTest = () => {
             );
           })}
       </div>
-      <input
-        type="text"
-        onChange={(event) => handleKeyPress(event)}
-        value={inputValue}
-        placeholder="Start Typing"
-      />
+      <div className="bottom-bar">
+        <input
+          className="word-input"
+          type="text"
+          onChange={(event) => handleKeyPress(event)}
+          value={inputValue}
+          autoFocus={true}
+        />
+        <div className="timer">{secondsLeft}</div>
+        <button className="replay">
+          <VscDebugRestart size={28} />
+        </button>
+      </div>
       {showResults && (
         <ResultCard
           wpm={wpm}

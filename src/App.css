@@ -1,0 +1,12 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.App {
+  width: 100%;
+  height: 100vh;
+  background: url('https://img.10fastfingers.com/img/layout/sprite-horizontal.png') 0px -250px repeat-x #add5ff;
+  padding: 6.25rem 15% 5% 15%;
+}
