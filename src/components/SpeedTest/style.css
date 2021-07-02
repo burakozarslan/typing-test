@@ -21,6 +21,8 @@
   justify-content: center;
   background-color: #A7C8E7;
   margin-top: 1rem;
+  border-radius: 4px;
+  padding: 4px 0;
 }
 
 .bottom-bar * {
