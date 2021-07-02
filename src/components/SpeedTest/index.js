@@ -30,9 +30,12 @@ const SpeedTest = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   // sets true when time's up
   const [showResults, setShowResults] = useState(false);
-
   // words per minute
   const [wpm, setWpm] = useState(null);
+  // is data fetching in progress
+  const [isLoading, setIsLoading] = useState(true);
+  // data fetching failed message
+  const [error, setError] = useState(null);
 
   const calculateWpm = useCallback(() => {
     let totalChars = 0;
@@ -47,8 +50,13 @@ const SpeedTest = () => {
 
   useEffect(() => {
     fetchAllWords(40)
-      .then(({ data }) => setWords(data))
-      .catch((err) => console.log(err.message));
+      .then(({ data }) => {
+        setWords(data);
+        setIsLoading(false);
+      })
+      .catch(() =>
+        setError("Something went wrong. Please press replay button.")
+      );
   }, []);
 
   useEffect(() => {
@@ -141,6 +149,8 @@ const SpeedTest = () => {
   return (
     <div className="speed-test--container">
       <div className="words--container">
+        {isLoading && "Loading"}
+        {error && `${error}`}
         {rows.length !== 0 &&
           rows[currentRowIndex].map((word, index) => {
             return (
