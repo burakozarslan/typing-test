@@ -53,6 +53,7 @@ const SpeedTest = () => {
       .then(({ data }) => {
         setWords(data);
         setIsLoading(false);
+        setError(null);
       })
       .catch(() =>
         setError("Something went wrong. Please press replay button.")
@@ -176,7 +177,7 @@ const SpeedTest = () => {
           autoFocus={true}
         />
         <div className="timer">{secondsLeft}</div>
-        <button className="replay">
+        <button className="replay" onClick={() => window.location.reload()}>
           <VscDebugRestart size={28} />
         </button>
       </div>
