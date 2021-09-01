@@ -1,8 +1,8 @@
 # Typing Test
 
-This project was inspired by [10FastFingers.com](https://10fastfingers.com/).
+This project replicates [10FastFingers.com](https://10fastfingers.com/).
 
-# [See Live](localhost:3000)
+# [See Live](https://10-typing-test.netlify.app/)
 
 ## Screenshots
 
