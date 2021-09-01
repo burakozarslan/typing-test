@@ -56,7 +56,10 @@ const SpeedTest = () => {
         setError(null);
       })
       .catch(() =>
-        setError("Something went wrong. Please press replay button.")
+        {
+          setError("Something went wrong. Please press replay button.")
+          setIsLoading(false);
+        }
       );
   }, []);
 
